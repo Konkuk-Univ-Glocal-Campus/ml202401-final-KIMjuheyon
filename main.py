@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import roc_curve
 
 # 데이터 로드
 file_path = 'amazon_uk_shoes_products_dataset_2021_12.csv'
@@ -60,18 +60,20 @@ print(f'ROC-AUC: {roc_auc}')
 
 # 혼동 행렬 시각화
 conf_matrix = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(8, 6))
 sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
-plt.show()
+plt.savefig('confusion_matrix.png')
 
 # ROC 곡선 시각화
-from sklearn.metrics import roc_curve
-
 fpr, tpr, _ = roc_curve(y_test, y_prob)
+plt.figure(figsize=(8, 6))
 plt.plot(fpr, tpr, marker='.')
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('ROC Curve')
-plt.show()
+plt.savefig('roc_curve.png')
+
+print("그래프가 'confusion_matrix.png'와 'roc_curve.png' 파일로 저장되었습니다.")
